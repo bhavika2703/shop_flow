@@ -1,0 +1,14 @@
+// lib/src/features/auth/presentation/bloc/auth_event.dart
+part of 'auth_bloc.dart';
+
+abstract class AuthEvent {}
+
+class AppStarted extends AuthEvent {}
+
+class LoginRequested extends AuthEvent {
+  final String username;
+  final String password;
+  LoginRequested({required this.username, required this.password});
+}
+
+class LogoutRequested extends AuthEvent {}
