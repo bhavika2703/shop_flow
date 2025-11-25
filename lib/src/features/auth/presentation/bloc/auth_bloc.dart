@@ -1,4 +1,3 @@
-// lib/src/features/auth/presentation/bloc/auth_bloc.dart
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -28,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             (user) => emit(AuthAuthenticated(user: user)),
       );
     } catch (e, st) {
-      // unexpected
+
       if (!emit.isDone) emit(AuthFailureState(message: e.toString()));
       print('AppStarted error: $e\n$st');
     }
@@ -42,7 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await authRepository.login(event.username, event.password);
       if (emit.isDone) return;
 
-      // IMPORTANT: await the fold so the handler stays alive while async code runs
+
       await result.fold(
             (failure) async {
           print('AuthBloc: login failure -> ${failure.message}');
@@ -52,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           print('AuthBloc: login success token=${token.accessToken.substring(0, token.accessToken.length.clamp(0, 8))}...');
           if (emit.isDone) return;
 
-          // try to load user
+
           final userRes = await authRepository.getCurrentUser();
           if (emit.isDone) return;
 

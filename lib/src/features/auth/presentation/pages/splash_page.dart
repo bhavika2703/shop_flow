@@ -14,7 +14,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // trigger app start using the top-level bloc
     Future.microtask(() => context.read<AuthBloc>().add(AppStarted()));
   }
 

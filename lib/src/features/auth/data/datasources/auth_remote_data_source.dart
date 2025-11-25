@@ -3,11 +3,13 @@ import '../models/token_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<TokenModel> login(String username, String password);
+
   Future<TokenModel> refresh(String refreshToken);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final Dio dio;
+
   AuthRemoteDataSourceImpl(this.dio);
 
   @override

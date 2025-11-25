@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../di/injection.dart' as di;
+import '../../../product/presentation/bloc/product_bloc.dart' show ProductBloc, FetchProducts;
+import '../../../product/presentation/pages/product_list_page.dart';
 import '../bloc/auth_bloc.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,7 +29,7 @@ class HomePage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(title),
+            title: Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
             actions: [
               IconButton(
                 onPressed: () {
@@ -38,25 +40,11 @@ class HomePage extends StatelessWidget {
               )
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(subtitle, style: Theme.of(context).textTheme.bodyLarge),
-                const SizedBox(height: 24),
-                const Text('This is a placeholder Home screen for ShopFlow.'),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () {
-                    // manual logout alternative
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
-                  child: const Text('Logout'),
-                ),
-              ],
-            ),
-          ),
+          body: BlocProvider<ProductBloc>(
+            create: (_) => di.sl<ProductBloc>()..add(FetchProducts()),
+        child: const ProductListPage(),
+        ),
+
         );
       },
     );
