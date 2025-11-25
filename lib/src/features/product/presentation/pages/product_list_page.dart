@@ -63,9 +63,13 @@ class _ProductListPageState extends State<ProductListPage> {
     final max = _scrollController.position.maxScrollExtent;
     final offset = _scrollController.offset;
     if (offset >= max * 0.9) {
+      final state = context.read<ProductBloc>().state;
+      if (state is ProductLoadInProgress) return;
+      if (state is ProductLoadSuccess && state.hasReachedMax) return;
       context.read<ProductBloc>().add(FetchProducts());
     }
   }
+
 
   Future<void> _onRefresh() async {
     context.read<ProductBloc>().add(RefreshProducts());
